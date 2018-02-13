@@ -4,9 +4,12 @@
 
 Various useful java utils
 
-##Version History
+## Version History
 
-###0.1.0
+### 0.1.0
+* Added net.researchgate.release versioning
+
+### 0.1.1
 * LegacyDateUtils
   * Converts dates between:
     - java.util.Date <-> JodaTime
