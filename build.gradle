@@ -16,8 +16,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
 }
+
+def releaseBranch = version.replaceAll('-SNAPSHOT', '')
+
 release {
     tagTemplate = '$name-$version'
+    git {
+        requireBranch = releaseBranch + '-release'
+    }
 }
 
 wrapper.gradleVersion = '4.5.1'
