@@ -12,3 +12,5 @@ Various useful java utils
     - java.util.Date <-> JodaTime
     - java.util.Date <-> java.time
   * Compares java.util.Date
+
+* Elvis - wraps chained method invocations in Optional
