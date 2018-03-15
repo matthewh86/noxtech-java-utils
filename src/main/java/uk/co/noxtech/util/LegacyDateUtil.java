@@ -151,6 +151,7 @@ public final class LegacyDateUtil {
      * @param date date to be shifted
      * @param timeUnit TimeUnit to use
      * @param amount amount of TimeUnits to shift
+     * @return the date shifted by the amount of TimeUnits.
      */
     public static Date chronoShift(final Date date, final TimeUnit timeUnit, final int amount) {
         final Calendar cal = Calendar.getInstance();
@@ -160,7 +161,7 @@ public final class LegacyDateUtil {
     }
 
     /**
-     * Returns the TimeUnit difference between two dates. MONTH and YEAR diffs are not supported.
+     * Returns the TimeUnit difference between two dates.
      * E.g. chronoDiff(2000-01-01 23:59:59, 2000-01-02 00:00:00, DAY) would return 0 days as there is only a 1 second difference.
      *
      * @param left the date to query against the right date.
@@ -181,7 +182,7 @@ public final class LegacyDateUtil {
     }
 
     /**
-     * Returns the TimeUnit difference between two dates. MONTH and YEAR diffs are not supported.
+     * Returns the TimeUnit difference between two dates.
      *
      * This will truncate the dates to the TimeUnit specified.
      * E.g. truncateDiff(2000-01-01 23:59:59, 2000-01-02 00:00:00, DAY) would return 1 day despite only having 1 second difference.
@@ -194,10 +195,6 @@ public final class LegacyDateUtil {
      * negative if left is after the right.
      */
     public static Long truncateDiff(final Date left, final Date right, final TimeUnit timeUnit) {
-        if (TimeUnit.YEAR.equals(timeUnit) || TimeUnit.MONTH.equals(timeUnit)) {
-            throw new UnsupportedOperationException(timeUnit + " diff not supported.");
-        }
-
         final Date leftTruncated = toDate(toZonedDateTime(left).truncatedTo(timeUnit.chronoUnitValue));
         final Date rightTruncated = toDate(toZonedDateTime(right).truncatedTo(timeUnit.chronoUnitValue));
         return chronoDiff(leftTruncated, rightTruncated, timeUnit);
@@ -213,6 +210,7 @@ public final class LegacyDateUtil {
      * @param minute the minute-of-hour to represent, from 0 to 59
      * @param second the second-of-minute to represent, from 0 to 59
      * @param millisecond the number of milliseconds to represent, from 0 to 999.
+     * @return a new Date with the given time values.
      */
     public static Date date(final int year, final int month, final int day, final int hour, final int minute, final int second, final int millisecond) {
         return toDate(ZonedDateTime.of(year, month, day, hour, minute, second, millisecond * 1000000, ZONE_OFFSET));
@@ -227,6 +225,7 @@ public final class LegacyDateUtil {
      * @param hour the hour-of-day to represent, from 0 to 23
      * @param minute the minute-of-hour to represent, from 0 to 59
      * @param second the second-of-minute to represent, from 0 to 59
+     * @return a new Date with the given time values with milliseconds set to 0.
      */
     public static Date date(final int year, final int month, final int day, final int hour, final int minute, final int second) {
         return date(year, month, day, hour, minute, second, 0);
@@ -238,6 +237,7 @@ public final class LegacyDateUtil {
      * @param year the year to represent, from MIN_YEAR to MAX_YEAR
      * @param month the month-of-year to represent, from 1 (January) to 12 (December)
      * @param day the day-of-month to represent, from 1 to 31
+     * @return a new Date with the given time values with time (HH:MM:SS.sss) set to zeroes.
      */
     public static Date date(final int year, final int month, final int day) {
         return date(year, month, day, 0, 0, 0, 0);
