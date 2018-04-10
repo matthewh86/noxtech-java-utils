@@ -10,8 +10,16 @@ plugins {
     id 'java-library'
     id 'maven'
     id 'maven-publish'
+
+    // ./gradlew release
     id 'net.researchgate.release' version '2.6.0'
+
+    // RELEASE publishing to bintray
+    // ./gradlew bintrayUpload -Dbintray.user=<YOUR_USER_NAME> -Dbintray.key=<YOUR_API_KEY>
     id 'com.jfrog.bintray' version '1.7.3'
+
+    // SNAPSHOT publishing to oss-jfrog-artifactory
+    // ./gradlew artifactoryPublish -Dsnapshot=true -Dbintray.user=<YOUR_USER_NAME> -Dbintray.key=<YOUR_API_KEY> -Dbuild.number=NNN
     id 'com.jfrog.artifactory' version '4.6.2'
 }
 
