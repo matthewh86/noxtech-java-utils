@@ -30,6 +30,7 @@ jobs:
       JVM_OPTS: -Xmx3200m
       TERM: dumb
     steps:
+      - checkout
       - run: gradle artifactoryPublish -Dsnapshot=true -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PbuildNumber=$CIRCLE_BUILD_NUM
 
   deploy-release:
