@@ -11,7 +11,6 @@ jobs:
       TERM: dumb
     steps:
       - checkout
-      # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "build.gradle" }}
@@ -22,6 +21,7 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
       - run: gradle test
+      - deployment-snapshot
 
   deployment-snapshot:
     docker:
@@ -32,9 +32,13 @@ jobs:
       TERM: dumb
     steps:
       - checkout
-      - run: gradle artifactoryPublish -Dsnapshot=true -Dbintray.user=$BINTRAY_USER -Dbintray.key=$BINTRAY_KEY -Dbuild.number=$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM
+      - run: gradle artifactoryPublish -Dsnapshot=true -Dbintray.user=$BINTRAY_USER -Dbintray.key=$BINTRAY_KEY -Dbuild.number=$CIRCLE_BUILD_NUM
 
   deployment-release:
+    post:
+      - >
+        if [ -n "$RELEASE_TYPE" ] && ["$RELEASE_TYPE" -eq "MINOR"]; then
+          gradle release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=1.0.0 -Prelease.newVersion=1.1.0-SNAPSHOT
     docker:
       - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
@@ -44,24 +48,3 @@ jobs:
     steps:
       - checkout
       - run: gradle bintrayUpload -Dbintray.user=$BINTRAY_USER -Dbintray.key=$BINTRAY_KEY
-
-workflows:
-  version: 2
-  create-snapshot:
-    jobs:
-      - build
-      - test:
-          requires:
-            - build
-      - deployment-snapshot:
-          requires:
-            - test
-  create-release:
-    jobs:
-      - build
-      - test:
-          requires:
-            - build
-      - deployment-release:
-          requires:
-            - test

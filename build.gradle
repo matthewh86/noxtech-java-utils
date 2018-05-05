@@ -11,8 +11,8 @@ plugins {
     id 'maven'
     id 'maven-publish'
 
-//    // ./gradlew release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=1.0.0 -Prelease.newVersion=1.1.0-SNAPSHOT
-//    id 'net.researchgate.release' version '2.6.0'
+    // ./gradlew release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=1.0.0 -Prelease.newVersion=1.1.0-SNAPSHOT
+    id 'net.researchgate.release' version '2.6.0'
 
     // SNAPSHOT publishing to oss-jfrog-artifactory
     // ./gradlew artifactoryPublish -Dsnapshot=true -Dbintray.user=<YOUR_USER_NAME> -Dbintray.key=<YOUR_API_KEY> -Dbuild.number=NNN
@@ -152,5 +152,8 @@ bintray {
             released = new Date()
         }
     }
-//    configurations = ['archives']
+}
+
+task version {
+    println project.version.toString()
 }

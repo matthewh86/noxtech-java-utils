@@ -1,0 +1,178 @@
+{
+	"info": {
+		"_postman_id": "f87e86c1-6900-4519-a334-07354ad28250",
+		"name": "noxtech-java-utils",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST Release (PATCH)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"build_parameters\": {\n\t\t\"releaseType\" : \"PATCH\"\n\t}\n}\n"
+				},
+				"url": {
+					"raw": "https://circleci.com/api/v1.1/project/github/{{CIRCLE_PROJECT_USERNAME}}/{{CIRCLE_PROJECT_REPONAME}}/tree/master?circle-token={{CIRCLE_CI_TOKEN}}",
+					"protocol": "https",
+					"host": [
+						"circleci",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1.1",
+						"project",
+						"github",
+						"{{CIRCLE_PROJECT_USERNAME}}",
+						"{{CIRCLE_PROJECT_REPONAME}}",
+						"tree",
+						"master"
+					],
+					"query": [
+						{
+							"key": "circle-token",
+							"value": "{{CIRCLE_CI_TOKEN}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Release (MINOR)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"build_parameters\": {\n\t\t\"releaseType\" : \"MINOR\"\n\t}\n}\n"
+				},
+				"url": {
+					"raw": "https://circleci.com/api/v1.1/project/github/{{CIRCLE_PROJECT_USERNAME}}/{{CIRCLE_PROJECT_REPONAME}}/tree/master?circle-token={{CIRCLE_CI_TOKEN}}",
+					"protocol": "https",
+					"host": [
+						"circleci",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1.1",
+						"project",
+						"github",
+						"{{CIRCLE_PROJECT_USERNAME}}",
+						"{{CIRCLE_PROJECT_REPONAME}}",
+						"tree",
+						"master"
+					],
+					"query": [
+						{
+							"key": "circle-token",
+							"value": "{{CIRCLE_CI_TOKEN}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Release (MAJOR)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"build_parameters\": {\n\t\t\"releaseType\" : \"MAJOR\"\n\t}\n}\n"
+				},
+				"url": {
+					"raw": "https://circleci.com/api/v1.1/project/github/{{CIRCLE_PROJECT_USERNAME}}/{{CIRCLE_PROJECT_REPONAME}}/tree/master?circle-token={{CIRCLE_CI_TOKEN}}",
+					"protocol": "https",
+					"host": [
+						"circleci",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1.1",
+						"project",
+						"github",
+						"{{CIRCLE_PROJECT_USERNAME}}",
+						"{{CIRCLE_PROJECT_REPONAME}}",
+						"tree",
+						"master"
+					],
+					"query": [
+						{
+							"key": "circle-token",
+							"value": "{{CIRCLE_CI_TOKEN}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f542b8c5-dc4f-44c3-96e6-2001ef4b68cc",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "84615675-b92a-4bb8-8621-068ea25ffa95",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
