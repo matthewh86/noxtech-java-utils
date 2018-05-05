@@ -44,12 +44,12 @@ jobs:
 
 workflows:
   version: 2
-  build-snapshot:
+  build-snapshot-workflow:
     jobs:
-      - build
+      - build:
           filters:
             branches:
               only: master
-      - deploy-snapshot
+      - deploy-snapshot:
           requires:
-            - build
+            - builds
