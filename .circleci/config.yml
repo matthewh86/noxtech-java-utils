@@ -52,4 +52,4 @@ workflows:
               only: master
       - deploy-snapshot:
           requires:
-            - builds
+            - build
