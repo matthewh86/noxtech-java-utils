@@ -1,9 +1,37 @@
-plugins {
-    id 'java-library'
-    id 'net.researchgate.release' version '2.6.0'
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
 }
 
+plugins {
+    id 'java-library'
+    id 'maven'
+    id 'maven-publish'
+
+    // ./gradlew release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=1.0.0 -Prelease.newVersion=1.1.0-SNAPSHOT
+    id 'net.researchgate.release' version '2.6.0'
+
+    // SNAPSHOT publishing to oss-jfrog-artifactory
+    // ./gradlew artifactoryPublish -Dsnapshot=true -Dbintray.user=<YOUR_USER_NAME> -Dbintray.key=<YOUR_API_KEY> -Dbuild.number=NNN
+    id 'com.jfrog.artifactory' version '4.6.2'
+
+    // RELEASE publishing to bintray
+    // ./gradlew bintrayUpload -Dbintray.user=<YOUR_USER_NAME> -Dbintray.key=<YOUR_API_KEY>
+    id 'com.jfrog.bintray' version '1.7.3'
+}
+
+wrapper.gradleVersion = '4.5.1'
+
+group = 'uk.co.noxtech'
+archivesBaseName = 'noxtech-java-utils'
+description = 'Assorted Java 8 utilities'
+def projectUrl = "https://github.com/matthewh86/noxtech-java-utils"
+
 repositories {
+    mavenLocal()
     mavenCentral()
     jcenter()
 }
@@ -17,13 +45,119 @@ dependencies {
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
 }
 
-def releaseBranch = version.replaceAll('-SNAPSHOT', '')
-
 release {
-    tagTemplate = '$name-$version'
     git {
-        requireBranch = releaseBranch + '-release'
+        requireBranch = '(master|\\d+\\.\\d+)'
     }
 }
 
-wrapper.gradleVersion = '4.5.1'
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+javadoc.failOnError = false
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "matthewh86"
+            name "Matthew Hayward"
+            email "matthewh86@gmail.com"
+        }
+    }
+
+    scm {
+        url projectUrl
+    }
+}
+
+publishing {
+    publications {
+        mavenPublication(MavenPublication) {
+            from components.java
+            artifact sourcesJar {
+                classifier "sources"
+            }
+            artifact javadocJar {
+                classifier "javadoc"
+            }
+            groupId = project.group
+            artifactId = project.archivesBaseName
+            version = project.version.toString()
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', project.description)
+                root.appendNode('name', project.name)
+                root.appendNode('url', projectUrl)
+                root.children().last() + pomConfig
+            }
+       }
+    }
+    repositories {
+        maven {
+            // change to point to your repo, e.g. http://my.org/repo
+            url "$buildDir/repo"
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? bintrayUser : ''
+    key = project.hasProperty('bintrayKey') ? bintrayKey : ''
+    publications = ['mavenPublication']
+    publish = true
+    pkg {
+        repo = project.archivesBaseName
+        name = project.archivesBaseName
+        userOrg = project.group
+        licenses = ['Apache-2.0']
+        websiteUrl = projectUrl
+        vcsUrl = projectUrl + '.git'
+        issueTrackerUrl = projectUrl + '/issues'
+        version {
+            name = project.version.toString()
+            desc = project.description
+            vcsTag = project.version.toString()
+            released = new Date()
+        }
+    }
+}
+
+artifactory {
+    contextUrl = 'http://oss.jfrog.org'
+    publish {
+        repository {
+            repoKey = 'oss-snapshot-local'
+            username = project.hasProperty('bintrayUser') ? bintrayUser : ''
+            password = project.hasProperty('bintrayKey') ? bintrayKey : ''
+        }
+        defaults {
+            publications('mavenPublication')
+            publishArtifacts = true
+            publishPom = true
+        }
+    }
+    resolve {
+        repoKey = 'jcenter'
+    }
+    clientConfig.info.setBuildNumber(project.hasProperty('buildNumber') ? buildNumber : '')
+}
+
+afterReleaseBuild.dependsOn bintrayUpload
