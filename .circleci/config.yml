@@ -47,21 +47,21 @@ jobs:
 
 workflows:
   version: 2
-    create-snapshot:
-      jobs:
-        - build
-        - test:
-            requires:
-              - build
-        - deployment-snapshot:
-            requires:
-              - test
-    create-release:
-      jobs:
-        - build
-        - test:
-            requires:
-              - build
-        - deployment-release:
-            requires:
-              - test
+  create-snapshot:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - deployment-snapshot:
+          requires:
+            - test
+  create-release:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - deployment-release:
+          requires:
+            - test
