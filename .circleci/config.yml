@@ -42,7 +42,7 @@ jobs:
       TERM: dumb
     steps:
       - checkout
-      - run: gradle bintrayUpload -PbintrayUser=$BINTRAY_USER -Pbintray.key=$BINTRAY_KEY
+      - run: gradle bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
 
 workflows:
   version: 2
