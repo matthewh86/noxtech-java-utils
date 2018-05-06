@@ -160,10 +160,6 @@ artifactory {
 }
 
 task setReleaseVersion {
-    if (!project.hasProperty('bintrayUser') || !project.hasProperty('bintrayKey')){
-        throw new GradleException('bintrayUser and bintrayKey need to be specified')
-    }
-
     System.setProperty("release.newVersion", project.version.toString())
     System.setProperty("release.releaseVersion",
             project.version.major
