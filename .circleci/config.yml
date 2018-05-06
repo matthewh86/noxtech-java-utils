@@ -41,11 +41,12 @@ jobs:
       JVM_OPTS: -Xmx3200m
       TERM: dumb
     steps:
-      - run: gradle release -PbintrayUser=$BINTRAY_USER -Pbintray.key=$BINTRAY_KEY -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=$RELEASE_VERSION -Prelease.newVersion=$NEW_VERSION
+      - checkout
+      - run: gradle release -PbintrayUser=$BINTRAY_USER -Pbintray.key=$BINTRAY_KEY -Prelease.useAutomaticVersion=true
 
 workflows:
   version: 2
-  build-snapshot-workflow:
+  deploy-snapshot-workflow:
     jobs:
       - build:
           filters:
