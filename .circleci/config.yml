@@ -42,7 +42,7 @@ jobs:
       TERM: dumb
     steps:
       - checkout
-      - run: gradle release -PbintrayUser=$BINTRAY_USER -Pbintray.key=$BINTRAY_KEY -Prelease.useAutomaticVersion=true
+      - run: gradle bintrayUpload -PbintrayUser=$BINTRAY_USER -Pbintray.key=$BINTRAY_KEY
 
 workflows:
   version: 2
@@ -53,5 +53,17 @@ workflows:
             branches:
               only: master
       - deploy-snapshot:
+          requires:
+            - build
+
+  deploy-release-workflow:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /[0-9]*\.[0-9]*\.[0-9]*/
+            branches:
+              only: master
+      - deploy-release:
           requires:
             - build

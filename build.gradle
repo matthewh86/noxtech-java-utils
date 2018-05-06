@@ -176,5 +176,3 @@ release {
     preTagCommitMessage = '[Gradle Release Plugin] - [promote]'
     newVersionCommitMessage = '[Gradle Release Plugin] - [patch]'
 }
-
-afterReleaseBuild.dependsOn bintrayUpload
