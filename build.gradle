@@ -121,7 +121,7 @@ bintray {
     user = project.hasProperty('bintrayUser') ? bintrayUser : ''
     key = project.hasProperty('bintrayKey') ? bintrayKey : ''
     publications = ['mavenPublication']
-    publish = true
+    dryRun = true
     pkg {
         repo = "maven"
         name = project.archivesBaseName
@@ -176,8 +176,10 @@ task setReleaseVersion {
     }
 
     System.setProperty("release.useAutomaticVersion", "true")
+    println "Setting newVersion to: " + newMajor + "." + newMinor + "." + newPatch + "-SNAPSHOT"
     System.setProperty("release.newVersion",
             newMajor + "." + newMinor + "." + newPatch + "-SNAPSHOT")
+    println "Setting releaseVersion to: " + currentVersionMajor + "." + currentVersionMinor + "." + currentVersionPatch
     System.setProperty("release.releaseVersion",
             currentVersionMajor + "." + currentVersionMinor + "." + currentVersionPatch)
 }
