@@ -74,5 +74,10 @@ workflows:
             branches:
               ignore: /.*/
       - deploy-release:
+          filters:
+            tags:
+              only: /[0-9]*\.[0-9]*\.[0-9]*/
+            branches:
+              ignore: /.*/
           requires:
             - build
