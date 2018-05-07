@@ -12,7 +12,7 @@ plugins {
     id 'maven-publish'
 
     // Automatic SEMVER
-    // ./gradlew release -Prelease.useAutomaticVersion=true
+    // ./gradlew release
     id 'net.vivin.gradle-semantic-build-versioning' version '4.0.0' apply false
     id 'net.researchgate.release' version '2.6.0'
 
@@ -160,6 +160,7 @@ artifactory {
 }
 
 task setReleaseVersion {
+    System.setProperty("release.useAutomaticVersion", "true")
     System.setProperty("release.newVersion", project.version.toString())
     System.setProperty("release.releaseVersion",
             project.version.major
