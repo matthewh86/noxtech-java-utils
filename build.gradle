@@ -177,13 +177,9 @@ task setReleaseVersion {
 
     System.setProperty("release.useAutomaticVersion", "true")
     System.setProperty("release.newVersion",
-            newMajor
-            + "." + newMinor
-            + "." + newPatch)
+            newMajor + "." + newMinor + "." + newPatch + "-SNAPSHOT")
     System.setProperty("release.releaseVersion",
-            currentVersionMajor
-            + "." + currentVersionMinor
-            + "." + currentVersionPatch)
+            currentVersionMajor + "." + currentVersionMinor + "." + currentVersionPatch)
 }
 
 project.tasks.release.dependsOn setReleaseVersion
