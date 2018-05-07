@@ -160,12 +160,30 @@ artifactory {
 }
 
 task setReleaseVersion {
+    def (currentVersionMajor, currentVersionMinor, currentVersionPatch) = currentVersion.version.tokenize('.')
+    currentVersionPatch = currentVersionPatch.replaceAll('-.+',"")
+
+    def (newMajor, newMinor, newPatch) = [project.version.major, project.version.minor, project.version.patch]
+
+    if (currentVersion.version == project.version.toString()){
+        if (currentVersionPatch.toString() == project.version.patch.toString()) {
+            newPatch = project.version.patch.toInteger() + 1
+        } else if (currentVersionMinor.toString() == project.version.minor.toString()) {
+            newMinor = project.version.minor.toInteger() + 1
+        } else if (currentVersionMajor.toString() == project.version.major.toString()) {
+            newMajor = project.version.major.toInteger() + 1
+        }
+    }
+
     System.setProperty("release.useAutomaticVersion", "true")
-    System.setProperty("release.newVersion", project.version.toString())
+    System.setProperty("release.newVersion",
+            newMajor
+            + "." + newMinor
+            + "." + newPatch)
     System.setProperty("release.releaseVersion",
-            project.version.major
-            + "." + project.version.minor
-            + "." + project.version.patch)
+            currentVersionMajor
+            + "." + currentVersionMinor
+            + "." + currentVersionPatch)
 }
 
 project.tasks.release.dependsOn setReleaseVersion
