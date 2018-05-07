@@ -167,7 +167,7 @@ task setReleaseVersion {
 
     println "currentVersion" + currentVersion.version
     println "projectVersion" + project.version.toString()
-    if (currentVersion.version == project.version.toString()){
+    if (currentVersion.version.toString().replaceAll("-SNAPSHOT", "") == project.version.toString().replaceAll("-SNAPSHOT", "")){
         if (currentVersionPatch.toString() == project.version.patch.toString()) {
             newPatch = project.version.patch.toInteger() + 1
         } else if (currentVersionMinor.toString() == project.version.minor.toString()) {
