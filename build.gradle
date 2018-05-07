@@ -11,17 +11,17 @@ plugins {
     id 'maven'
     id 'maven-publish'
 
+    // Automatic SEMVER
+    // ./gradlew release -Prelease.useAutomaticVersion=true
     id 'net.vivin.gradle-semantic-build-versioning' version '4.0.0' apply false
-
-    // ./gradlew release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=1.0.0 -Prelease.newVersion=1.1.0-SNAPSHOT
     id 'net.researchgate.release' version '2.6.0'
 
     // SNAPSHOT publishing to oss-jfrog-artifactory
-    // ./gradlew artifactoryPublish -Dsnapshot=true -Dbintray.user=<YOUR_USER_NAME> -Dbintray.key=<YOUR_API_KEY> -Dbuild.number=NNN
+    // ./gradlew artifactoryPublish -Dsnapshot=true -DbintrayUser=<YOUR_USER_NAME> -DbintrayKey=<YOUR_API_KEY> -DbuildNumber=NNN
     id 'com.jfrog.artifactory' version '4.6.2'
 
     // RELEASE publishing to bintray
-    // ./gradlew bintrayUpload -Dbintray.user=<YOUR_USER_NAME> -Dbintray.key=<YOUR_API_KEY>
+    // ./gradlew bintrayUpload -DbintrayUser=<YOUR_USER_NAME> -DbintrayKey=<YOUR_API_KEY>
     id 'com.jfrog.bintray' version '1.7.3'
 }
 
