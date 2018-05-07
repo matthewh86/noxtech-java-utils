@@ -30,6 +30,7 @@ wrapper.gradleVersion = '4.5.1'
 def currentVersion = new Properties()
 file("gradle.properties").withInputStream { currentVersion.load(it) }
 
+def groupName = 'noxtech'
 group = 'uk.co.noxtech'
 archivesBaseName = 'noxtech-java-utils'
 description = 'Assorted Java 8 utilities'
@@ -124,7 +125,7 @@ bintray {
     pkg {
         repo = "maven"
         name = project.archivesBaseName
-        userOrg = project.group
+        userOrg = groupName
         licenses = ['Apache-2.0']
         websiteUrl = projectUrl
         vcsUrl = projectUrl + '.git'
