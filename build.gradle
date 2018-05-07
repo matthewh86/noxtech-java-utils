@@ -188,6 +188,6 @@ task setReleaseVersion {
 
 project.tasks.preTagCommit.dependsOn setReleaseVersion
 release {
-    preTagCommitMessage = '[Gradle Release Plugin] - [promote] [ci skip]'
+    preTagCommitMessage = '[Gradle Release Plugin] - [promote]'
     newVersionCommitMessage = '[Gradle Release Plugin] - [patch]'
 }
