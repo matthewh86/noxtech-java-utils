@@ -121,7 +121,6 @@ bintray {
     user = project.hasProperty('bintrayUser') ? bintrayUser : ''
     key = project.hasProperty('bintrayKey') ? bintrayKey : ''
     publications = ['mavenPublication']
-    dryRun = true
     pkg {
         repo = "maven"
         name = project.archivesBaseName
