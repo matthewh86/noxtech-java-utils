@@ -1,5 +1,7 @@
 autobump{
     majorPattern = ~/\[major\]|\[breaking\]/
     minorPattern = ~/\[minor\]|\[feature\]/
-    patchPattern = ~/\[patch\]/
+    patchPattern = ~/\[patch\]|\[new-snapshot\]/
+    newPreReleasePattern = ~/\[new-pre-release\]|\[release-candidate\]/
+    promoteToReleasePattern = ~/\[promote\]|\[release\]/
 }
