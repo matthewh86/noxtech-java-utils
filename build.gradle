@@ -14,7 +14,6 @@ plugins {
     // Automatic SEMVER
     // ./gradlew release
     id 'net.vivin.gradle-semantic-build-versioning' version '4.0.0' apply false
-    id 'net.researchgate.release' version '2.6.0'
 
     // SNAPSHOT publishing to oss-jfrog-artifactory
     // ./gradlew artifactoryPublish -Dsnapshot=true -DbintrayUser=<YOUR_USER_NAME> -DbintrayKey=<YOUR_API_KEY> -DbuildNumber=NNN
@@ -26,9 +25,6 @@ plugins {
 }
 
 wrapper.gradleVersion = '4.5.1'
-
-def currentVersion = new Properties()
-file("gradle.properties").withInputStream { currentVersion.load(it) }
 
 def groupName = 'noxtech'
 group = 'uk.co.noxtech'
@@ -157,37 +153,4 @@ artifactory {
         repoKey = 'jcenter'
     }
     clientConfig.info.setBuildNumber(project.hasProperty('buildNumber') ? buildNumber : '')
-}
-
-task setReleaseVersion {
-    def (currentVersionMajor, currentVersionMinor, currentVersionPatch) = currentVersion.version.tokenize('.')
-    currentVersionPatch = currentVersionPatch.replaceAll('-.+',"")
-
-    def (newMajor, newMinor, newPatch) = [project.version.major, project.version.minor, project.version.patch]
-
-    println "currentVersion" + currentVersion.version
-    println "projectVersion" + project.version.toString()
-    if (currentVersion.version.toString().replaceAll("-SNAPSHOT", "") == project.version.toString().replaceAll("-SNAPSHOT", "")){
-        if (currentVersionPatch.toString() == project.version.patch.toString()) {
-            newPatch = project.version.patch.toInteger() + 1
-        } else if (currentVersionMinor.toString() == project.version.minor.toString()) {
-            newMinor = project.version.minor.toInteger() + 1
-        } else if (currentVersionMajor.toString() == project.version.major.toString()) {
-            newMajor = project.version.major.toInteger() + 1
-        }
-    }
-
-    System.setProperty("release.useAutomaticVersion", "true")
-    println "Setting newVersion to: " + newMajor + "." + newMinor + "." + newPatch + "-SNAPSHOT"
-    System.setProperty("release.newVersion",
-            newMajor + "." + newMinor + "." + newPatch + "-SNAPSHOT")
-    println "Setting releaseVersion to: " + currentVersionMajor + "." + currentVersionMinor + "." + currentVersionPatch
-    System.setProperty("release.releaseVersion",
-            currentVersionMajor + "." + currentVersionMinor + "." + currentVersionPatch)
-}
-
-project.tasks.preTagCommit.dependsOn setReleaseVersion
-release {
-    preTagCommitMessage = '[Gradle Release Plugin] - [promote]'
-    newVersionCommitMessage = '[Gradle Release Plugin] - [patch]'
 }

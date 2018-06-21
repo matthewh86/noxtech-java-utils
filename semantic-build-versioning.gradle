@@ -1,4 +1,5 @@
 autobump{
-    patchPattern = ~/\[patch\]|\[Gradle Release Plugin\] - new version commit:.+/
-    promoteToReleasePattern = ~/\[promote\]|pre tag commit: /
+    majorPattern = ~/\[major\]|\[breaking\]/
+    minorPattern = ~/\[minor\]|\[feature\]/
+    patchPattern = ~/\[patch\]/
 }
