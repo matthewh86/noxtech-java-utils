@@ -22,27 +22,39 @@ jobs:
           key: v1-dependencies-{{ checksum "build.gradle" }}
       - run: gradle test
 
-#  deploy-snapshot:
-#    docker:
-#      - image: circleci/openjdk:8-jdk
-#    working_directory: ~/repo
-#    environment:
-#      JVM_OPTS: -Xmx3200m
-#      TERM: dumb
-#    steps:
-#      - checkout
-#      - run: gradle artifactoryPublish -Dsnapshot=true -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PbuildNumber=$CIRCLE_BUILD_NUM
-#
-#  deploy-release:
-#    docker:
-#      - image: circleci/openjdk:8-jdk
-#    working_directory: ~/repo
-#    environment:
-#      JVM_OPTS: -Xmx3200m
-#      TERM: dumb
-#    steps:
-#      - checkout
-#      - run: gradle bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
+  tag-release:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+    steps:
+      - checkout
+      - run: gradle tag -Prelease=true
+      - run: git push --tags
+
+  deploy-snapshot:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+    steps:
+      - checkout
+      - run: gradle artifactoryPublish -Dsnapshot=true -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PbuildNumber=$CIRCLE_BUILD_NUM
+
+  deploy-release:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+    steps:
+      - checkout
+      - run: gradle bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY
 
 workflows:
   version: 2
@@ -51,39 +63,45 @@ workflows:
       - build:
           filters:
             tags:
-              ignore: /[0-9]+\.[0-9]+\.[0-9]+/
+              ignore: /.+/
 
-#  deploy-snapshot-workflow:
-#  # TODO need to ignore promotion builds, tag filter does not work
-#    jobs:
-#      - build:
-#          filters:
-#            tags:
-#              ignore: /[0-9]+\.[0-9]+\.[0-9]+/
-#            branches:
-#              only: master
-#      - deploy-snapshot:
-#          filters:
-#            tags:
-#              ignore: /[0-9]+\.[0-9]+\.[0-9]+/
-#            branches:
-#              only: master
-#          requires:
-#            - build
-#
-#  deploy-release-workflow:
-#    jobs:
-#      - build:
-#          filters:
-#            tags:
-#              only: /[0-9]+\.[0-9]+\.[0-9]+/
-#            branches:
-#              ignore: /.*/
-#      - deploy-release:
-#          filters:
-#            tags:
-#              only: /[0-9]+\.[0-9]+\.[0-9]+/
-#            branches:
-#              ignore: /.*/
-#          requires:
-#            - build
+  deploy-snapshot-workflow:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: master
+            tags:
+              ignore: /.+/
+      - deploy-snapshot:
+          filters:
+            branches:
+              ignore: master
+            tags:
+              ignore: /.+/
+          requires:
+            - build
+
+  deploy-release-workflow:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
+      - tag-release:
+            tags:
+              only: /[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
+          requires:
+            - build
+      - deploy-release:
+          filters:
+            tags:
+              only: /[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
+          requires:
+            - tag-release
