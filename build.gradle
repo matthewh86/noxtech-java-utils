@@ -17,7 +17,7 @@ plugins {
 
     // SNAPSHOT publishing to oss-jfrog-artifactory
     // ./gradlew artifactoryPublish -Dsnapshot=true -DbintrayUser=<YOUR_USER_NAME> -DbintrayKey=<YOUR_API_KEY> -DbuildNumber=NNN
-    id 'com.jfrog.artifactory' version '4.6.2'
+    id 'com.jfrog.artifactory' version '4.7.4'
 
     // RELEASE publishing to bintray
     // ./gradlew bintrayUpload -DbintrayUser=<YOUR_USER_NAME> -DbintrayKey=<YOUR_API_KEY>
