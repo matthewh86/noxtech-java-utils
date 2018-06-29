@@ -21,7 +21,7 @@ plugins {
 
     // RELEASE publishing to bintray
     // ./gradlew bintrayUpload -DbintrayUser=<YOUR_USER_NAME> -DbintrayKey=<YOUR_API_KEY>
-    id 'com.jfrog.bintray' version '1.7.3'
+    id 'com.jfrog.bintray' version '1.8.1'
 }
 
 wrapper.gradleVersion = '4.5.1'
@@ -30,7 +30,7 @@ def groupName = 'noxtech'
 group = 'uk.co.noxtech'
 archivesBaseName = 'noxtech-java-utils'
 description = 'Assorted Java 8 utilities'
-def projectUrl = "https://github.com/matthewh86/noxtech-java-utils"
+def projectUrl = "https://github.com/noxtech/noxtech-java-utils"
 
 repositories {
     mavenLocal()
@@ -115,8 +115,8 @@ publishing {
 }
 
 bintray {
-    user = project.hasProperty('bintrayUser') ? bintrayUser : ''
-    key = project.hasProperty('bintrayKey') ? bintrayKey : ''
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayKey') ? project.property('bintrayKey') : System.getenv('BINTRAY_KEY')
     publications = ['mavenPublication']
     pkg {
         repo = "maven"
@@ -140,8 +140,8 @@ artifactory {
     publish {
         repository {
             repoKey = 'oss-snapshot-local'
-            username = project.hasProperty('bintrayUser') ? bintrayUser : ''
-            password = project.hasProperty('bintrayKey') ? bintrayKey : ''
+            username = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+            password = project.hasProperty('bintrayKey') ? project.property('bintrayKey') : System.getenv('BINTRAY_KEY')
         }
         defaults {
             publications('mavenPublication')
@@ -152,5 +152,5 @@ artifactory {
     resolve {
         repoKey = 'jcenter'
     }
-    clientConfig.info.setBuildNumber(project.hasProperty('buildNumber') ? buildNumber : '')
+    clientConfig.info.setBuildNumber(project.hasProperty('buildNumber') ? project.property('buildNumber') : System.getenv('BUILD_NUMBER'))
 }
