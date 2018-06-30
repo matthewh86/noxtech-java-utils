@@ -14,27 +14,23 @@ plugins {
     // Automatic SEMVER
     // ./gradlew release
     id 'net.vivin.gradle-semantic-build-versioning' version '4.0.0' apply false
-    id 'net.researchgate.release' version '2.6.0'
 
     // SNAPSHOT publishing to oss-jfrog-artifactory
     // ./gradlew artifactoryPublish -Dsnapshot=true -DbintrayUser=<YOUR_USER_NAME> -DbintrayKey=<YOUR_API_KEY> -DbuildNumber=NNN
-    id 'com.jfrog.artifactory' version '4.6.2'
+    id 'com.jfrog.artifactory' version '4.7.4'
 
     // RELEASE publishing to bintray
     // ./gradlew bintrayUpload -DbintrayUser=<YOUR_USER_NAME> -DbintrayKey=<YOUR_API_KEY>
-    id 'com.jfrog.bintray' version '1.7.3'
+    id 'com.jfrog.bintray' version '1.8.1'
 }
 
 wrapper.gradleVersion = '4.5.1'
-
-def currentVersion = new Properties()
-file("gradle.properties").withInputStream { currentVersion.load(it) }
 
 def groupName = 'noxtech'
 group = 'uk.co.noxtech'
 archivesBaseName = 'noxtech-java-utils'
 description = 'Assorted Java 8 utilities'
-def projectUrl = "https://github.com/matthewh86/noxtech-java-utils"
+def projectUrl = "https://github.com/noxtech/noxtech-java-utils"
 
 repositories {
     mavenLocal()
@@ -119,8 +115,8 @@ publishing {
 }
 
 bintray {
-    user = project.hasProperty('bintrayUser') ? bintrayUser : ''
-    key = project.hasProperty('bintrayKey') ? bintrayKey : ''
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayKey') ? project.property('bintrayKey') : System.getenv('BINTRAY_KEY')
     publications = ['mavenPublication']
     pkg {
         repo = "maven"
@@ -144,8 +140,8 @@ artifactory {
     publish {
         repository {
             repoKey = 'oss-snapshot-local'
-            username = project.hasProperty('bintrayUser') ? bintrayUser : ''
-            password = project.hasProperty('bintrayKey') ? bintrayKey : ''
+            username = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+            password = project.hasProperty('bintrayKey') ? project.property('bintrayKey') : System.getenv('BINTRAY_KEY')
         }
         defaults {
             publications('mavenPublication')
@@ -156,38 +152,5 @@ artifactory {
     resolve {
         repoKey = 'jcenter'
     }
-    clientConfig.info.setBuildNumber(project.hasProperty('buildNumber') ? buildNumber : '')
-}
-
-task setReleaseVersion {
-    def (currentVersionMajor, currentVersionMinor, currentVersionPatch) = currentVersion.version.tokenize('.')
-    currentVersionPatch = currentVersionPatch.replaceAll('-.+',"")
-
-    def (newMajor, newMinor, newPatch) = [project.version.major, project.version.minor, project.version.patch]
-
-    println "currentVersion" + currentVersion.version
-    println "projectVersion" + project.version.toString()
-    if (currentVersion.version.toString().replaceAll("-SNAPSHOT", "") == project.version.toString().replaceAll("-SNAPSHOT", "")){
-        if (currentVersionPatch.toString() == project.version.patch.toString()) {
-            newPatch = project.version.patch.toInteger() + 1
-        } else if (currentVersionMinor.toString() == project.version.minor.toString()) {
-            newMinor = project.version.minor.toInteger() + 1
-        } else if (currentVersionMajor.toString() == project.version.major.toString()) {
-            newMajor = project.version.major.toInteger() + 1
-        }
-    }
-
-    System.setProperty("release.useAutomaticVersion", "true")
-    println "Setting newVersion to: " + newMajor + "." + newMinor + "." + newPatch + "-SNAPSHOT"
-    System.setProperty("release.newVersion",
-            newMajor + "." + newMinor + "." + newPatch + "-SNAPSHOT")
-    println "Setting releaseVersion to: " + currentVersionMajor + "." + currentVersionMinor + "." + currentVersionPatch
-    System.setProperty("release.releaseVersion",
-            currentVersionMajor + "." + currentVersionMinor + "." + currentVersionPatch)
-}
-
-project.tasks.preTagCommit.dependsOn setReleaseVersion
-release {
-    preTagCommitMessage = '[Gradle Release Plugin] - [promote]'
-    newVersionCommitMessage = '[Gradle Release Plugin] - [patch]'
+    clientConfig.info.setBuildNumber(project.hasProperty('buildNumber') ? project.property('buildNumber') : System.getenv('BUILD_NUMBER'))
 }
