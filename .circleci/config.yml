@@ -86,22 +86,16 @@ workflows:
     jobs:
       - build:
           filters:
-            tags:
-              only: /[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               only: /master/
       - tag-release:
           filters:
-            tags:
-              only: /[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               only: /master/
           requires:
             - build
       - deploy-release:
           filters:
-            tags:
-              only: /[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               only: /master/
           requires:
