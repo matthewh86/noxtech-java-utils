@@ -3,7 +3,6 @@ package uk.co.noxtech.util.jackson;
 import java.io.StringWriter;
 
 import org.junit.Before;
-import org.springframework.data.geo.GeoModule;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -18,8 +17,7 @@ public abstract class AbstractGeoJsonSerializerTest {
 
     @Before
     public void abstractSetUp() throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper()
-            .registerModule(new GeoModule());
+        ObjectMapper objectMapper = new ObjectMapper();
         serializerProvider = objectMapper.getSerializerProvider();
         writer = new StringWriter();
         generator = new JsonFactory().createGenerator(writer);
