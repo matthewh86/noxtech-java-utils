@@ -38,12 +38,20 @@ repositories {
     jcenter()
 }
 
+ext {
+    jacksonVersion='2.9.6'
+}
+
 dependencies {
     api 'joda-time:joda-time:2.9.9'
 
     implementation 'org.projectlombok:lombok:1.16.20'
+    implementation 'org.springframework.data:spring-data-mongodb:2.0.9.RELEASE'
+    implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
 
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.assertj:assertj-core:3.10.0'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
 }
 
