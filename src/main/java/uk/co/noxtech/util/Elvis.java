@@ -28,7 +28,7 @@ public final class Elvis {
     }
 
     /**
-     * Shortcut for {@link Elvis#nullSafe}(() -> methodchain).orElse(null)
+     * Shortcut for {@link Elvis#nullSafe}(() -&lt; methodchain).orElse(null)
      *
      * @param resolver a method chain e.g. car.getManufacturer().getName()
      * @param <T> the return type
