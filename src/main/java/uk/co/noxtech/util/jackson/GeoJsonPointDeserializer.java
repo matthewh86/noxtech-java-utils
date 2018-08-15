@@ -13,7 +13,6 @@ import com.mongodb.client.model.geojson.GeoJsonObjectType;
 
 public class GeoJsonPointDeserializer extends JsonDeserializer<GeoJsonPoint> {
 
-    private final static String GEOJSON_TYPE_POINT = GeoJsonObjectType.POINT.getTypeName();
     private final static String JSON_KEY_GEOJSON_TYPE = "type";
     private final static String JSON_KEY_GEOJSON_COORDS = "coordinates";
 
@@ -25,7 +24,7 @@ public class GeoJsonPointDeserializer extends JsonDeserializer<GeoJsonPoint> {
 
         double x;
         double y;
-        if (GEOJSON_TYPE_POINT.equalsIgnoreCase(type)) {
+        if (GeoJsonObjectType.POINT.getTypeName().equalsIgnoreCase(type)) {
             x = coordsNode.get(0).asDouble(0);
             y = coordsNode.get(1).asDouble(0);
         } else {

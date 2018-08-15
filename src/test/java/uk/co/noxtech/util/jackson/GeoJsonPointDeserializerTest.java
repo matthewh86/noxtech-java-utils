@@ -19,7 +19,7 @@ public class GeoJsonPointDeserializerTest extends AbstractGeoJsonDeserializerTes
     }
 
     @Test
-    public void deserialize() throws Exception {
+    public void deserialize_shouldDeserializeGeoJsonPoint_fromJson() throws Exception {
         GeoJsonPoint result = underTest.deserialize(parser, context);
 
         assertThat(result).isEqualTo(new GeoJsonPoint(0.1, 0.2));
