@@ -1,5 +1,11 @@
 # Version History
 
+## 0.3.1
+* Removed Resource (just use getSystemResourceAsStream)
+
+## 0.3.0
+* Added GeoJson Serializers / Deserializers
+
 ## 0.2.0
 * Added nullableSafe to Elvis
 * Removed net.researchgate.release versioning
