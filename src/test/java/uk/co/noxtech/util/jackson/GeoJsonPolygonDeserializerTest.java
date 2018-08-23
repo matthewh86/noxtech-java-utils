@@ -1,7 +1,7 @@
 package uk.co.noxtech.util.jackson;
 
+import static java.lang.ClassLoader.getSystemResourceAsStream;
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.co.noxtech.util.Resource.getResource;
 
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ public class GeoJsonPolygonDeserializerTest extends AbstractGeoJsonDeserializerT
 
     @Before
     public void setUp() throws Exception {
-        parser = objectMapper.getFactory().createParser(getResource("jsonPolygon.json"));
+        parser = objectMapper.getFactory().createParser(getSystemResourceAsStream("jsonPolygon.json"));
 
         underTest = new GeoJsonPolygonDeserializer();
     }

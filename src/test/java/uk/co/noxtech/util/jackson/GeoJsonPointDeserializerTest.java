@@ -1,7 +1,7 @@
 package uk.co.noxtech.util.jackson;
 
+import static java.lang.ClassLoader.getSystemResourceAsStream;
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.co.noxtech.util.Resource.getResource;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,7 @@ public class GeoJsonPointDeserializerTest extends AbstractGeoJsonDeserializerTes
 
     @Before
     public void setUp() throws Exception {
-        parser = objectMapper.getFactory().createParser(getResource("jsonPoint.json"));
+        parser = objectMapper.getFactory().createParser(getSystemResourceAsStream("jsonPoint.json"));
 
         underTest = new GeoJsonPointDeserializer();
     }

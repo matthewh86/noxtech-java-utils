@@ -6,6 +6,10 @@
 ## Java utils
 
 * Elvis - wraps chained method invocations in Optional
+* GeoJson Serializers / Deserializers for:
+  * Point
+  * Line
+  * Polygon
 * LegacyDateUtils
   * Converts dates between:
     - java.util.Date <-> JodaTime
