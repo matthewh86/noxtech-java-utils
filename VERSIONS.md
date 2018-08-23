@@ -1,6 +1,6 @@
 # Version History
 
-## 0.3.1
+## 0.4.0
 * Removed Resource (just use getSystemResourceAsStream)
 
 ## 0.3.0
