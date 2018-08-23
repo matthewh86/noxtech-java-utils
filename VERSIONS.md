@@ -1,5 +1,8 @@
 # Version History
 
+## 0.5.0
+* Added DateUtils to convert between java.time and JodaTime
+
 ## 0.4.0
 * Removed Resource (just use getSystemResourceAsStream)
 

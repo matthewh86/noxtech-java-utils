@@ -10,6 +10,9 @@
   * Point
   * Line
   * Polygon
+* DateUtils
+  * Converts dates between:
+    - java.time <-> JodaTime
 * LegacyDateUtils
   * Converts dates between:
     - java.util.Date <-> JodaTime
