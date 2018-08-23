@@ -1,5 +1,7 @@
 package uk.co.noxtech.util;
 
+import static java.util.Objects.nonNull;
+
 import java.time.YearMonth;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -33,21 +35,21 @@ public final class LegacyDateUtil {
     /* --- Java 8 API -> Date --- */
 
     public static Date toDate(final java.time.LocalDate localDate) {
-        if (localDate != null) {
+        if (nonNull(localDate)) {
             return Date.from(localDate.atStartOfDay(ZONE_OFFSET).toInstant());
         }
         return null;
     }
 
     public static Date toDate(final java.time.LocalDateTime localDateTime) {
-        if (localDateTime != null) {
+        if (nonNull(localDateTime)) {
             return Date.from(localDateTime.toInstant(ZONE_OFFSET));
         }
         return null;
     }
 
     public static Date toDate(final ZonedDateTime zonedDateTime) {
-        if (zonedDateTime != null) {
+        if (nonNull(zonedDateTime)) {
             return Date.from(zonedDateTime.toInstant());
         }
         return null;
@@ -56,21 +58,21 @@ public final class LegacyDateUtil {
     /* --- Date -> Java 8 API --- */
 
     public static java.time.LocalDate toLocalDate(final Date date) {
-        if (date != null) {
+        if (nonNull(date)) {
             return toZonedDateTime(date).toLocalDate();
         }
         return null;
     }
 
     public static java.time.LocalDateTime toLocalDateTime(final Date date) {
-        if (date != null) {
+        if (nonNull(date)) {
             return toZonedDateTime(date).toLocalDateTime();
         }
         return null;
     }
 
     public static ZonedDateTime toZonedDateTime(final Date date) {
-        if (date != null) {
+        if (nonNull(date)) {
             return date.toInstant().atZone(ZONE_OFFSET);
         }
         return null;
@@ -79,21 +81,21 @@ public final class LegacyDateUtil {
     /* --- JodaTime API -> Date --- */
 
     public static Date toDate(final org.joda.time.DateTime dateTime) {
-        if (dateTime != null) {
+        if (nonNull(dateTime)) {
             return dateTime.toDate();
         }
         return null;
     }
 
     public static Date toDate(final org.joda.time.LocalDate localDate) {
-        if (localDate != null) {
+        if (nonNull(localDate)) {
             return localDate.toDate();
         }
         return null;
     }
 
     public static Date toDate(final org.joda.time.LocalDateTime localDateTime) {
-        if (localDateTime != null) {
+        if (nonNull(localDateTime)) {
             return localDateTime.toDate(TimeZone.getTimeZone(ZONE_OFFSET));
         }
         return null;
@@ -102,21 +104,21 @@ public final class LegacyDateUtil {
     /* --- Date -> JodaTime API --- */
 
     public static org.joda.time.DateTime toJodaDateTime(final Date date) {
-        if (date != null) {
+        if (nonNull(date)) {
             return new org.joda.time.DateTime(date, getJodaDateTimeZone());
         }
         return null;
     }
 
     public static org.joda.time.LocalDate toJodaLocalDate(final Date date) {
-        if (date != null) {
+        if (nonNull(date)) {
             return new org.joda.time.LocalDate(date, getJodaDateTimeZone());
         }
         return null;
     }
 
     public static org.joda.time.LocalDateTime toJodaLocalDateTime(final Date date) {
-        if (date != null) {
+        if (nonNull(date)) {
             return new org.joda.time.LocalDateTime(date, getJodaDateTimeZone());
         }
         return null;

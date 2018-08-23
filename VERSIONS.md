@@ -1,5 +1,8 @@
 # Version History
 
+## 0.5.1
+* Add null checks to DateUtils
+
 ## 0.5.0
 * Added DateUtils to convert between java.time and JodaTime
 
