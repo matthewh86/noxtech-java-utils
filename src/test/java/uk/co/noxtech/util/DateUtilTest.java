@@ -23,15 +23,15 @@ public class DateUtilTest {
     @Test
     public void toDateTime_shouldCreateDateTime_fromLocalDateTime() {
         assertThat(DateUtil.toDateTime(
-            LocalDateTime.of(2000, 1, 1, 12, 30, 30, 500000)))
-            .isEqualByComparingTo(new DateTime(2000, 1, 1, 12, 30, 30, 500));
+            LocalDateTime.of(2000, 1, 1, 12, 30, 30, 5_000_000)))
+            .isEqualByComparingTo(new DateTime(2000, 1, 1, 12, 30, 30, 5));
     }
 
     @Test
     public void toDateTime_shouldCreateDateTime_fromZonedDateTime() {
         assertThat(DateUtil.toDateTime(
-            ZonedDateTime.of(2000, 1, 1, 12, 30, 30, 500000, ZoneId.of("UTC"))))
-            .isEqualByComparingTo(new DateTime(2000, 1, 1, 12, 30, 30, 500, DateTimeZone.UTC));
+            ZonedDateTime.of(2000, 1, 1, 12, 30, 30, 5_000_000, ZoneId.of("UTC"))))
+            .isEqualByComparingTo(new DateTime(2000, 1, 1, 12, 30, 30, 5, DateTimeZone.UTC));
     }
 
     @Test
@@ -42,14 +42,14 @@ public class DateUtilTest {
 
     @Test
     public void toLocalDateTime_shouldCreateLocalDateTime_fromDateTime() {
-        assertThat(DateUtil.toLocalDateTime(new DateTime(2000, 1, 1, 12, 30, 30, 500)))
-            .isEqualTo(LocalDateTime.of(2000, 1, 1, 12, 30, 30, 500000));
+        assertThat(DateUtil.toLocalDateTime(new DateTime(2000, 1, 1, 12, 30, 30, 5)))
+            .isEqualTo(LocalDateTime.of(2000, 1, 1, 12, 30, 30, 5_000_000));
     }
 
     @Test
     public void toZonedDateTime_shouldCreateZoneDateTime_fromDateTime() {
-        assertThat(DateUtil.toZonedDateTime(new DateTime(2000, 1, 1, 12, 30, 30, 500, DateTimeZone.UTC)))
-            .isEqualTo(ZonedDateTime.of(2000, 1, 1, 12, 30, 30, 500000, ZoneId.of("UTC")));
+        assertThat(DateUtil.toZonedDateTime(new DateTime(2000, 1, 1, 12, 30, 30, 5, DateTimeZone.UTC)))
+            .isEqualTo(ZonedDateTime.of(2000, 1, 1, 12, 30, 30, 5_000_000, ZoneId.of("UTC")));
     }
 
 }
