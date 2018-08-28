@@ -1,5 +1,8 @@
 # Version History
 
+## 0.5.2
+* Fix millis and nanos DateUtil conversion
+
 ## 0.5.1
 * Add null checks to DateUtils
 
