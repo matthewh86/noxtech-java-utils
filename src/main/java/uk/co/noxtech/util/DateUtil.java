@@ -12,6 +12,8 @@ import org.joda.time.DateTimeZone;
 
 public class DateUtil {
 
+    private static final int MILLION = 1_000_000;
+
     private DateUtil() {
     }
 
@@ -34,7 +36,7 @@ public class DateUtil {
         if (nonNull(localDateTime)) {
             return new DateTime(DateTimeZone.UTC).withDate(
                 localDateTime.getYear(), localDateTime.getMonthValue(), localDateTime.getDayOfMonth()
-            ).withTime(localDateTime.getHour(), localDateTime.getMinute(), localDateTime.getSecond(), localDateTime.getNano() / 1000000);
+            ).withTime(localDateTime.getHour(), localDateTime.getMinute(), localDateTime.getSecond(), localDateTime.getNano() / MILLION);
         }
         return null;
     }
@@ -47,7 +49,7 @@ public class DateUtil {
             return new DateTime(
                 zonedDateTime.getYear(), zonedDateTime.getMonthValue(), zonedDateTime.getDayOfMonth(),
                 zonedDateTime.getHour(), zonedDateTime.getMinute(), zonedDateTime.getSecond(),
-                zonedDateTime.getNano() / 1000000,
+                zonedDateTime.getNano() / MILLION,
                 toDateTimeZone(zonedDateTime.getZone()));
         }
         return null;
@@ -71,7 +73,7 @@ public class DateUtil {
         if (nonNull(dateTime)) {
             return LocalDateTime.of(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                 dateTime.getHourOfDay(), dateTime.minuteOfHour().get(), dateTime.getSecondOfMinute(),
-                dateTime.getMillisOfSecond() * 1000000);
+                dateTime.getMillisOfSecond() * MILLION);
         }
         return null;
     }
@@ -83,7 +85,7 @@ public class DateUtil {
         if (nonNull(dateTime)) {
             return ZonedDateTime.of(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth(),
                 dateTime.getHourOfDay(), dateTime.minuteOfHour().get(), dateTime.getSecondOfMinute(),
-                dateTime.getMillisOfSecond() * 1000000, toZoneId(dateTime.getZone()));
+                dateTime.getMillisOfSecond() * MILLION, toZoneId(dateTime.getZone()));
         }
         return null;
     }
