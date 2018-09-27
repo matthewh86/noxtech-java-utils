@@ -5,11 +5,7 @@
 
 ## Java utils
 
-* Elvis - wraps chained method invocations in Optional
-* GeoJson Serializers / Deserializers for:
-  * Point
-  * Line
-  * Polygon
+### Dates
 * DateUtils
   * Converts dates between:
     - java.time <-> JodaTime
@@ -18,3 +14,13 @@
     - java.util.Date <-> JodaTime
     - java.util.Date <-> java.time
   * Compares java.util.Date
+
+### Json
+* GeoJson Serializers / Deserializers for:
+  * Point
+  * Line
+  * Polygon
+
+### Misc Utils
+* Elvis - wraps chained method invocations in Optional
+* ResourceUtil - convenience methods for reading resources
