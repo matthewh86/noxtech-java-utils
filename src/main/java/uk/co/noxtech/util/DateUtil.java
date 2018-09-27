@@ -10,6 +10,10 @@ import java.time.ZonedDateTime;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
+/**
+ * <p>Utility class to easily convert between Java 8 Date API and the JodaTime API. </p>
+ * <p>This defaults to UTC for convenience.</p>
+ */
 public class DateUtil {
 
     private static final int MILLION = 1_000_000;

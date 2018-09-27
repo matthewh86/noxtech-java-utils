@@ -1,5 +1,8 @@
 # Version History
 
+## 0.6.0
+* Added ResourceUtil
+
 ## 0.5.2
 * Fix millis and nanos DateUtil conversion
 
